@@ -246,7 +246,7 @@ class FileManager
             //js load fm_locale
             if(isset($this->options['njt_fs_file_manager_settings']['fm_locale'])) {
                 $locale = $this->options['njt_fs_file_manager_settings']['fm_locale'];
-                if( !empty($locale) &&  $locale != 'en' ) {
+                if( !empty($locale) &&  $locale != 'en' && in_array($locale, njt_fs_locales(), true)) {
                     $locale = sanitize_file_name($locale);
                     wp_enqueue_script( 'njt_fs_fma_lang', plugins_url('lib/js/i18n/elfinder.'.$locale.'.js', __FILE__));
                 }
@@ -260,7 +260,7 @@ class FileManager
                 'PLUGIN_DIR'=> NJT_FS_BN_PLUGIN_DIR,
                 'ABSPATH'=> str_replace("\\", "/", ABSPATH),
                 'is_multisite' => is_multisite(),
-                'lang' => !empty( $this->options['njt_fs_file_manager_settings']['fm_locale']) ? $this->options['njt_fs_file_manager_settings']['fm_locale'] : '',
+                'lang' => !empty( $this->options['njt_fs_file_manager_settings']['fm_locale']) ? sanitize_file_name($this->options['njt_fs_file_manager_settings']['fm_locale']) : '',
                 'nonce_connector' => wp_create_nonce('file-manager-security-token'),
             ));
         }
