@@ -287,26 +287,29 @@ class FileManager
                     'uploadMaxSize' =>  $uploadMaxSize .'M',
                     'winHashFix'    => DIRECTORY_SEPARATOR !== '/', 
                     'uploadOrder'   => array('deny', 'allow'),
-                    'disabled' => array(''),
-                    'acceptedName' => 'validName',
-                    'attributes' => array() // default is empty
+                    'uploadDeny'    => array('htaccess'),
+                    //'acceptedName' => 'validName',
+                    'attributes' => array(
+                        array(
+                            'pattern' => '/.htaccess/',
+                            'read' => true,
+                            'write' => false,
+                            'hidden' => false,
+                            'locked' => true
+                        )
+                    ) // default is empty
                 ),
             ),
         );
-
-        if (current_user_can('manage_options')) {
-            $opts['roots'][0]['uploadDeny'] = array('htaccess');
-            $opts['roots'][0]['uploadAllow'] = array('all');
-        }
 
         // .htaccess
         if(isset($this->options['njt_fs_file_manager_settings']['enable_htaccess']) && ($this->options['njt_fs_file_manager_settings']['enable_htaccess'] == '1')) {
             $attributes = array(
                 'pattern' => '/.htaccess/',
-                'read' => false,
+                'read' => true,
                 'write' => false,
                 'hidden' => true,
-                'locked' => false
+                'locked' => true
             );
             array_push($opts['roots'][0]['attributes'], $attributes);
         }
@@ -322,7 +325,7 @@ class FileManager
                 'uploadDeny'    => array('htaccess'), 
                 'uploadAllow'   => array('all'),
                 'uploadOrder'   => array('deny', 'allow'),
-                'acceptedName' => 'validName',
+               // 'acceptedName' => 'validName',
                 'attributes' => array(
                     array(
                         'pattern' => '/.tmb/',
@@ -449,7 +452,10 @@ class FileManager
                 if(in_array($key,$arrCanUploadMime)) {
                     $explodeValue = explode(',',$value);
                     foreach($explodeValue as $item) {
-                        array_push($opts['roots'][0]['uploadAllow'], $item );
+                        $listFileCanNotUpload = $mimeTypes->listFileCanNotUpload();
+                        if(!in_array($item, $listFileCanNotUpload)) {
+                            array_push($opts['roots'][0]['uploadAllow'], $item );
+                        }
                     }
                 }
           
@@ -589,7 +595,14 @@ class FileManager
         $private_url_folder_access = filter_var($_POST['private_url_folder_access'], FILTER_SANITIZE_STRING) ? str_replace("\\\\", "/", trim($_POST['private_url_folder_access'])) : '';
         $hide_paths = filter_var($_POST['hide_paths'], FILTER_SANITIZE_STRING) ? explode('|', preg_replace('/\s+/', '', $_POST['hide_paths'])) : array();
         $lock_files =  filter_var($_POST['lock_files'], FILTER_SANITIZE_STRING) ? explode('|', preg_replace('/\s+/', '', $_POST['lock_files'])) : array();
+
         $can_upload_mime = filter_var($_POST['can_upload_mime'], FILTER_SANITIZE_STRING) ? explode(',', preg_replace('/\s+/', '', $_POST['can_upload_mime'])) : array();
+
+        $can_upload_mime = array_filter($can_upload_mime, function($item) {
+            $helper = new \FileManagerHelper();
+            $listFileCanNotUpload = $helper->listFileCanNotUpload();
+            return !in_array($item, $listFileCanNotUpload);
+        });
 
         //save options
         $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$njt_fs_list_user_restrictions]['list_user_restrictions_alow_access'] = $list_user_restrictions_alow_access;
