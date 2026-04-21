@@ -1,22 +1,22 @@
 === File Manager Pro - Filester ===
 Contributors: ninjateam
-Donate link: https://ninjateam.org/wordpress-media-library-folders/
-Tags: file manager, wordpress file manager, wp file manager, files, download plugin
+Donate link: https://ninjateam.org/filester-file-manager-pro/
+Tags: file manager, wordpress file manager, wp file manager, ftp, download plugin
 Requires at least: 3.0
-Tested up to: 6.8
-Stable tag: 1.9
+Tested up to: 6.9
+Stable tag: 2.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Advanced File Manager and Code Editor. Best WordPress file manager without FTP access. No need to upgrade because this is PRO version.
+Best WordPress file manager without FTP access. Edit code with built-in editor, upload files, download plugins, download themes, manage wp directory, and more!
 
 == Description ==
 
-Filester is a WP File Manager Pro plugin, but you can download and use it completely for free. It comes with all the **premium features** of other WordPress advanced file manager plugins out there. 
+Filester is a **WP File Manager Pro** plugin, but you can download and use it completely for free. It comes with all the premium features of other WordPress advanced file manager plugins out there. 
 
-Filester helps you manage **WordPress configuration files**, while [FileBird](https://1.envato.market/FileBird-Folders-Plugin) allows you to manage/upload/download **media library folders**. 
+Filester helps you manage WordPress file directory and edit your website's base configuration details, while [FileBird](https://1.envato.market/FileBird-Folders-Plugin) allows you to manage/upload/download **media library folders**. 
 
-With Filester - File Manager Pro, you can copy, paste, create an archive, download, upload, edit, delete, preview, duplicate, and get info of the WordPress configuration and directory files **without FTP access**.
+With this File Manager Pro, you can copy, paste, create an archive, download, upload, edit, delete, preview, duplicate, and get info of the WordPress configuration and directory files **without FTP access**.
 
 This file manager plugin is dedicated to boosting your productivity in managing WordPress. All necessary file operations are fully provided and tested on a variety of servers and browsers.
 
@@ -66,18 +66,22 @@ With Filester, it's easy to modify the auto-update mechanism with each new versi
 
 With built-in code editors, you can edit code files with syntax highlighting and code completion features for themes, plugins, and custom code snippets. It takes one click to download a plugin's **ZIP file** to your local storage. It helps track changes made to files and revert to previous versions if needed.
 
-All webmasters can also [download WordPress media library](https://ninjateam.org/download-wordpress-media-library/) using Filester download options as well.
+All webmasters can also [download WordPress media library](https://ninjateam.org/download-wordpress-media-library/?utm_source=wp-org&utm_medium=filester) using Filester download options as well. Yet the media files are organized in month- and year-based folders.
 
 ###🎏 COMPATIBILITY
 
 Filester works seamlessly with all major WordPress themes, page builders, and website builders.
 
-💙 **Like Filester?** [Share your experience](https://wordpress.org/support/plugin/filester/reviews/?filter=5) and empower other users to manage WordPress like a pro.
+💙 **Like Filester?** [Write us a review here](https://wordpress.org/support/plugin/filester/reviews/?filter=5) ✨
 
-👉 Check out NinjaTeam [WordPress tutorials](https://ninjateam.org/category/tutorials/).
+👉 **Explore recommended plugins and themes:**
+
+- [Brandy](https://wpbrandy.com/?utm_source=wp-org&utm_medium=filester) - WooCommerce theme, sales-first design.
+- [Shadcn](https://wordpress.org/themes/shadcn/) - Minimal. Clean code. Beautiful blocks. Zero clutter.
+- [FastDup](https://wordpress.org/plugins/fastdup/) – Fastest WordPress migration & duplicator plugin.
 
 = CREDIT =
-Big thanks to elFinder - open-source file manager for web.
+Big thanks to elFinder - Open-source file manager for web.
 
 == Installation ==
 Manual installation is easy and takes less than one minute.
@@ -89,18 +93,21 @@ Manual installation is easy and takes less than one minute.
 You’re done. Enjoy.
 
 == Frequently Asked Questions ==
-= Is it compatible with WordPress 6.8? = 
-Definitely yes! We’re always up-to-date to give you the best experience in using our plugin.
 
-= Do all folders work the same way as they do in FTP client? =
-Yes. You can click on any folder / file to preview or edit its content. The file will be opened in a pop-up, so you can make changes and save it.
+= Is Filester really free? Are there hidden upsells? = 
+Yes, Filester is completely free and comes with all the premium features built in. There is no paid tier, no upgrade prompts, and no feature locked behind a paywall. 
 
-= Is Filester free? =
-Yes, Filester is totally free and full-fledged with premium features. You won't be asked to upgrade to any pro versions. We make it free because we think every WordPress user deserves file manager resources.
+= Can I control which users have access to the File Manager? =
+Yes. Filester includes user authority settings that let you define access rights per user role. You can restrict which file extensions are visible or locked, set root path access, control file visibility, and limit uploadable file types and maximum file sizes. This keeps sensitive files protected from unauthorized users.
+
+= Can I use Filester to manage my WordPress media library? =
+No, Filester lets you browse, upload/download/edit and manage your WordPress file directory. 
+
+To manage WordPress media library or download entire media folders with your organized structure, you'll need the [FileBird plugin](https://ninjateam.org/wordpress-media-library-folders/?utm_source=wp-org&utm_medium=filester).
 
 = How can I get support if I encounter issues with Filester? =
-You can [create a new topic](https://wordpress.org/support/plugin/filester/#new-topic-0), and we'll come back shortly for a quick fix.
-Otherwise, feel free to reach us at [Ninja Team Support Center](https://ninjateam.org/support/).
+You can [create a new public topic](https://wordpress.org/support/plugin/filester/#new-topic-0), and we'll come back shortly for a quick fix.
+Otherwise, feel free to [chat or email us](https://ninjateam.org/support/).
 
 
 == Screenshots ==
@@ -110,6 +117,22 @@ Otherwise, feel free to reach us at [Ninja Team Support Center](https://ninjatea
 4. Top free file manager plugins comparison chart
 
 == Changelog ==
+
+= Apr 20, 2026 - Version 2.1.0 =
+- Added: Recommended plugins
+- Improved: Error logs
+
+= Dec 17, 2025 - Version 2.0.2 =
+- Added: Implement validation and auto-correction for the root folder path and URL
+- Fixed: Occasionally, "/s/" is included in the link path on the file info
+
+= Oct 29, 2025 - Version 2.0.1 =
+- Fixed: Display notice 
+- Fixed: Miss Themes folder 
+
+= Sep 12, 2025 - Version 2.0 =
+- Updated: Elfinder library ver 2.1.66
+- Added: Icon Refresh folder
 
 = Jun 28, 2025 - Version 1.9 =
 - Fixed: Authenticated (Subscriber+) Directory Traversal to Arbitrary File Deletion
