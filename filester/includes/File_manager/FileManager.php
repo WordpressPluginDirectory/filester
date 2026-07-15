@@ -210,9 +210,12 @@ class FileManager
     public function enqueueAdminScripts($suffix)
     {
         if (in_array($suffix, $this->hook_suffix)) {
-            $selectorThemes = get_option('njt_fs_selector_themes');
+            $selectorThemes = get_option('njt_fs_selector_themes', array());
+            if (!is_array($selectorThemes)) {
+                $selectorThemes = array();
+            }
             if (empty($selectorThemes[$this->userRole])) {
-                $selectorThemes[$this->userRole]['themesValue'] = 'Default';
+                $selectorThemes[$this->userRole] = array('themesValue' => 'Default');
                 update_option('njt_fs_selector_themes', $selectorThemes);
             }
         
@@ -373,13 +376,13 @@ class FileManager
         //Creat root path for user
         $private_path_valid = false;
         if(!empty($this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['private_folder_access'])){
-            $private_path = $this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['private_folder_access'] .'/';
-            // Validate private folder path exists and is readable
-            if (is_dir($private_path) && is_readable($private_path)) {
-                $opts['roots'][0]['path'] = $private_path;
-                $private_path_valid = true;
+            $private_path = str_replace('\\', '/', trim($this->options['njt_fs_file_manager_settings']['list_user_role_restrictions'][$this->userRole]['private_folder_access'])) . '/';
+            // Fail closed when a configured private folder is missing or unreadable.
+            if (!is_dir($private_path) || !is_readable($private_path)) {
+                $this->rejectConnectorAccess(__('Private folder is unavailable. Access denied.', 'filester'));
             }
-            // If invalid, keep using default root path (already validated above)
+            $opts['roots'][0]['path'] = $private_path;
+            $private_path_valid = true;
         }
 
          //Creat url root path for user
@@ -554,17 +557,20 @@ class FileManager
         check_ajax_referer('njt-fs-file-manager-admin', 'nonce', true);
         
         $themesValue = sanitize_text_field ($_POST['themesValue']);
-        $selectorThemes = get_option('njt_fs_selector_themes');
+        $selectorThemes = get_option('njt_fs_selector_themes', array());
+        if (!is_array($selectorThemes)) {
+            $selectorThemes = array();
+        }
         if (empty($selectorThemes[$this->userRole])) {
-            $selectorThemes[$this->userRole]['themesValue'] = 'Default';
+            $selectorThemes[$this->userRole] = array('themesValue' => 'Default');
             update_option('njt_fs_selector_themes', $selectorThemes);
         }
-       
+
         if ($selectorThemes[$this->userRole]['themesValue'] != $themesValue) {
             $selectorThemes[$this->userRole]['themesValue'] = $themesValue;
             update_option('njt_fs_selector_themes', $selectorThemes);
         }
-        $selected_themes = get_option('njt_fs_selector_themes');
+        $selected_themes = $selectorThemes;
         $linkThemes = plugins_url('/lib/themes/' . $selected_themes[$this->userRole]['themesValue'] . '/css/theme.css', __FILE__);
         wp_send_json_success($linkThemes);
         wp_die();
@@ -674,6 +680,19 @@ class FileManager
         update_option('njt_fs_settings', $this->options);
         wp_send_json_success(get_option('njt_fs_settings'));
         wp_die();
+    }
+
+    /**
+     * Reject elFinder connector initialization with an access-denied response.
+     *
+     * @param string $message Error message shown in the file manager UI.
+     */
+    private function rejectConnectorAccess($message)
+    {
+        status_header(403);
+        header('Content-Type: application/json; charset=utf-8');
+        echo wp_json_encode(array('error' => array($message)));
+        wp_die('', '', array('response' => 403));
     }
 
     public function canAccessSensitiveFiles() {
